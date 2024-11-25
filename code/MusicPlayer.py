@@ -17,30 +17,32 @@ current_song = ""
 paused = False
 def music_loader(): #function for creating a directory
      global current_song
-     initializer.directory = filedialog.askdirectory()
-     for song in os.listdir(initializer.directory):
-         name, ext = os.path.splitext(song)
-         if ext =='.mp3':
-          list_of_songs.append(song)
+     files = filedialog.askopenfilenames(title="Select songs", filetypes=(("MP3 files","*.mp3"),("All files", "*.*")))
+     if files:
+         list_of_songs.clear()
+         songList.delete(0,END)
 
-     for song in list_of_songs:
-          songList.insert("end", song)
+         for file in files:
+             list_of_songs.append(file)
 
-     songList.selection_set(0) # set current song to the one selected in the list
-     current_song = list_of_songs[songList.curselection()[0]]
+         for song in list_of_songs:
+              songList.insert("end", os.path.basename(song))
+
+         songList.selection_set(0) # set current song to the one selected in the list
+         current_song = list_of_songs[songList.curselection()[0]]
 
 # code functions so we can use the buttoms we created
 
 def play():
     global current_song, paused # global allows us to work with variables outside the function
-    song_path = os.path.join(initializer.directory, current_song)
-    if paused:
-        pygame.mixer.music.unpause()
-        paused= False
-    else:
-        pygame.mixer.music.load(song_path)
-        pygame.mixer.music.play()
-        paused = False
+    if current_song:
+        if paused:
+            pygame.mixer.music.unpause()
+            paused = False
+        else:
+            pygame.mixer.music.load(current_song)
+            pygame.mixer.music.play()
+            paused = False
 
 def pause():
     global paused
@@ -56,6 +58,7 @@ def next():
             songList.selection_clear(current_index) # starts from the current song until end of the list removes the previous sonng so we can go to the next one
             songList.selection_set(next_index)
             current_song = list_of_songs[next_index]
+            pygame.mixer.music.pause()
             play()
     except:
        pass
@@ -69,6 +72,7 @@ def previous():
             songList.selection_clear(current_index)
             songList.selection_set(previous_index)
             current_song = list_of_songs[previous_index]
+            pygame.mixer.music.pause()
         play()
     except:
         pass
