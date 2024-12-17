@@ -20,3 +20,4 @@ The basic structure of the code will be:
    Block of code which allows us to start the emergent window
    block of code for reading from the computer images and put them in the emergent window
    block of code that creates a menu bar for accessing the directory 
+
