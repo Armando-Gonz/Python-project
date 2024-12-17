@@ -1,4 +1,5 @@
 # Python-project
+
 The idea of this project is to create an application which allows the user to play music using GUI. The application will include functions so the user can select the song, pause it, play it, and go to the previous one or next one.libraries like Tkinter and pygame will be use for creating the user interface and play with the buttoms and play the the songs, and os so the code can access to the files inside the computer.
 The basic structure of the code will be:
 
